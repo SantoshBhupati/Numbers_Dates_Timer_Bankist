@@ -251,3 +251,14 @@ btnSort.addEventListener('click', function (e) {
 /////////////////////////////////////////////////
 /////////////////////////////////////////////////
 // LECTURES
+
+console.log(23 === 23.0);
+console.log(Number('23'));
+console.log(+'23');
+
+//parsining
+console.log(Number.parseInt('30px')); //30
+console.log(Number.parseInt('e23')); //NaN;
+//infinite method
+ console.log(Number.isFinite(20));  //true
+ console.log(Number.isFinite('20')); // false
