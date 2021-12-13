@@ -315,3 +315,17 @@ console.log(Number.parseInt('e23')); //NaN;
  [...document.querySelectorAll('.movements__row')].forEach(function(row,i){
    if(i % 2 ===0) row.style.backgroundColor = 'orangered';
  })});
+
+
+ //BIGINT
+ console.log(2 ** 53 -1);//9007199254740991 javascript does not allow bigger than this number(integer);
+ console.log(Number.MAX_SAFE_INTEGER);//9007199254740991
+
+  console.log(121313131313241241414113535n); // n  coverts normal number into bigint
+
+  //OPERATIONS
+  // work same 
+  console.log(12113123131n +334343444n);  //12447466575n
+  console.log(131444423n * 12322141444n); //1619676772230966812n
+  
+ 
