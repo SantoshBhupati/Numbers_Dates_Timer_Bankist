@@ -327,5 +327,42 @@ console.log(Number.parseInt('e23')); //NaN;
   // work same 
   console.log(12113123131n +334343444n);  //12447466575n
   console.log(131444423n * 12322141444n); //1619676772230966812n
+
+
+  // Creates Dates
+  new Date();
+  // 1
+  const now = new Date();
+  console.log(now); //Mon Dec 13 2021 16:54:31 GMT+0530 (India Standard Time)
   
+  //2
+
+//   console.log(new Date('Sat Dec 25 2021')); //Sat Dec 25 2021 00:00:00 GMT+0530 (India Standard Time
  
+//   // in javascript month is started from 0 base means jan : 0 feb :1 march : 2 and so on
+
+//   console.log(new Date(2037,10,23,12,4,5)); //Mon Nov 23 2037 12:04:05 GMT+0530 (India Standard Time) here 10 means ocotober
+  
+//   console.log(new Date(2037,10,31));  //Tue Dec 01 2037 00:00:00 GMT+0530 (India Standard Time)
+//   // note the point javascript has autocorrect method in this case november month has 30 days but we wrote 31 javasccript enginge autocoorect shows decmberr 1
+
+//   console.log(new Date(0));  //Thu Jan 01 1970 05:30:00 GMT+0530 (India Standard Time) here javascript date class is started
+
+//  // it is formula to convert into miliseconds
+
+//   console.log(new Date(3 * 24 * 60 * 60 * 1000 ));  //Sun Jan 04 1970 05:30:00 GMT+0530 (India Standard Time)
+
+//   // Working With Dates
+
+  const Future = new Date(2037,10,23,12,4,5);
+
+  console.log(now.getFullYear()); //2021
+  console.log(now.getMonth()) ;  //11
+  console.log(now.getDate()); //13
+  console.log(now.getDay()); //1
+  console.log(now.getHours()); //17
+  console.log(now.getMinutes()); //19
+  console.log(now.getSeconds()); //9
+  console.log(now.getMilliseconds()); //810
+  console.log(now.toISOString());  //2021-12-13T11:51:11.040Z
+   
