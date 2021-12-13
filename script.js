@@ -300,3 +300,18 @@ console.log(Number.parseInt('e23')); //NaN;
  console.log((2.7).toFixed(0))  // 3
  console.log((2.7).toFixed(3)) //2.700
  console.log(+(2.745).toFixed(2)) //2.75 and its a number 
+
+ //REMAINDER OPERATOR
+ console.log(5/2); // 2
+ console.log(5 %2); // 1
+
+ const isEven = (n)=> n % 2 === 0;
+
+ console.log(isEven(6)); // true
+ console.log(isEven(5)); // false
+
+ //some pratical example
+ labelBalance.addEventListener('click',function(){
+ [...document.querySelectorAll('.movements__row')].forEach(function(row,i){
+   if(i % 2 ===0) row.style.backgroundColor = 'orangered';
+ })});
