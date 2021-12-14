@@ -81,19 +81,26 @@ const inputClosePin = document.querySelector('.form__input--pin');
 /////////////////////////////////////////////////
 // Functions
 
-const displayMovements = function (movements, sort = false) {
+const displayMovements = function (acc, sort = false) {
   containerMovements.innerHTML = '';
 
-  const movs = sort ? movements.slice().sort((a, b) => a - b) : movements;
+  const movs = sort ? acc.movements.slice().sort((a, b) => a - b) : acc.movements;
 
   movs.forEach(function (mov, i) {
     const type = mov > 0 ? 'deposit' : 'withdrawal';
+     
+     const date = new Date(acc.movementsDates[i]);
+     const day  = `${date.getDate()}`.padStart(2,0);
+     const month = `${date.getMonth()+1}`.padStart(2,0);
+     const year = date.getFullYear();
+     const displayDate = `${day}/${month}/${year}`;
 
     const html = `
       <div class="movements__row">
         <div class="movements__type movements__type--${type}">${
       i + 1
     } ${type}</div>
+    <div class="movements__date">${displayDate}</div>
         <div class="movements__value">${mov.toFixed(2)}€</div>
       </div>
     `;
@@ -142,7 +149,7 @@ createUsernames(accounts);
 
 const updateUI = function (acc) {
   // Display movements
-  displayMovements(acc.movements);
+  displayMovements(acc);
 
   // Display balance
   calcDisplayBalance(acc);
@@ -154,6 +161,15 @@ const updateUI = function (acc) {
 ///////////////////////////////////////
 // Event handlers
 let currentAccount;
+
+
+//FAKE ACCOUNT TO DISPLAY
+currentAccount = account1;
+updateUI(currentAccount);
+containerApp.style.opacity = 100;
+
+
+
 
 btnLogin.addEventListener('click', function (e) {
   // Prevent form from submitting
@@ -170,6 +186,16 @@ btnLogin.addEventListener('click', function (e) {
       currentAccount.owner.split(' ')[0]
     }`;
     containerApp.style.opacity = 100;
+
+    //dates 
+    const now = new Date();
+ 
+const day  = `${now.getDate()}`.padStart(2,0);
+const month = `${now.getMonth()+1}`.padStart(2,0);
+const year = now.getFullYear();
+const hours = now.getHours();
+const min = now.getMinutes();
+labelDate.textContent = `${day}/${month}/${year} , ${hours}:${min}`;
 
     // Clear input fields
     inputLoginUsername.value = inputLoginPin.value = '';
@@ -198,6 +224,10 @@ btnTransfer.addEventListener('click', function (e) {
     currentAccount.movements.push(-amount);
     receiverAcc.movements.push(amount);
 
+    // Add The Dates
+    currentAccount.movementsDates.push(new Date().toISOString());
+    receiverAcc.movementsDates.push(new Date().toISOString());
+
     // Update UI
     updateUI(currentAccount);
   }
@@ -211,7 +241,9 @@ btnLoan.addEventListener('click', function (e) {
   if (amount > 0 && currentAccount.movements.some(mov => mov >= amount * 0.1)) {
     // Add movement
     currentAccount.movements.push(amount);
-
+  
+     //Add Transfer Date
+      currentAccount.movementsDates.push(new Date().toISOString());
     // Update UI
     updateUI(currentAccount);
   }
@@ -244,7 +276,7 @@ btnClose.addEventListener('click', function (e) {
 let sorted = false;
 btnSort.addEventListener('click', function (e) {
   e.preventDefault();
-  displayMovements(currentAccount.movements, !sorted);
+  displayMovements(currentAccount, !sorted);
   sorted = !sorted;
 });
 
@@ -332,8 +364,8 @@ console.log(Number.parseInt('e23')); //NaN;
   // Creates Dates
   new Date();
   // 1
-  const now = new Date();
-  console.log(now); //Mon Dec 13 2021 16:54:31 GMT+0530 (India Standard Time)
+  // const now = new Date();
+  // console.log(now); //Mon Dec 13 2021 16:54:31 GMT+0530 (India Standard Time)
   
   //2
 
@@ -354,15 +386,14 @@ console.log(Number.parseInt('e23')); //NaN;
 
 //   // Working With Dates
 
-  const Future = new Date(2037,10,23,12,4,5);
+  // const Future = new Date(2037,10,23,12,4,5);
 
-  console.log(now.getFullYear()); //2021
-  console.log(now.getMonth()) ;  //11
-  console.log(now.getDate()); //13
-  console.log(now.getDay()); //1
-  console.log(now.getHours()); //17
-  console.log(now.getMinutes()); //19
-  console.log(now.getSeconds()); //9
-  console.log(now.getMilliseconds()); //810
-  console.log(now.toISOString());  //2021-12-13T11:51:11.040Z
-   
+  // console.log(now.getFullYear()); //2021
+  // console.log(now.getMonth()) ;  //11
+  // console.log(now.getDate()); //13
+  // console.log(now.getDay()); //1
+  // console.log(now.getHours()); //17
+  // console.log(now.getMinutes()); //19
+  // console.log(now.getSeconds()); //9
+  // console.log(now.getMilliseconds()); //810
+  // console.log(now.toISOString());  //2021-12-13T11:51:11.040Z
