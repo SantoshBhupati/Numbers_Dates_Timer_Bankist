@@ -21,9 +21,9 @@ const account1 = {
     '2020-01-28T09:15:04.904Z',
     '2020-04-01T10:17:24.185Z',
     '2020-05-08T14:11:59.604Z',
-    '2020-05-27T17:01:17.194Z',
-    '2020-07-11T23:36:17.929Z',
-    '2020-07-12T10:51:36.790Z',
+    '2021-12-10T17:01:17.194Z',
+    '2021-12-12T23:36:17.929Z',
+    '2021-12-14T10:51:36.790Z',
   ],
   currency: 'EUR',
   locale: 'pt-PT', // de-DE
@@ -80,7 +80,22 @@ const inputClosePin = document.querySelector('.form__input--pin');
 
 /////////////////////////////////////////////////
 // Functions
+  const formatDisplaydate = function(date){
 
+    const calcDaysPassed = (date1,date2) => Math.round(Math.abs((date2 - date1) / (1000*60*60*24)));
+    const days = calcDaysPassed(new Date(),date);
+    // console.log(days);
+    if(days === 0) return 'Today';
+    if(days === 1) return 'Yestarday';
+    if(days <= 7) return `${days} days ago`;
+    else{
+
+    const day  = `${date.getDate()}`.padStart(2,0);
+    const month = `${date.getMonth()+1}`.padStart(2,0);
+    const year = date.getFullYear();
+    return `${day}/${month}/${year}`;
+    }
+  }
 const displayMovements = function (acc, sort = false) {
   containerMovements.innerHTML = '';
 
@@ -90,10 +105,7 @@ const displayMovements = function (acc, sort = false) {
     const type = mov > 0 ? 'deposit' : 'withdrawal';
      
      const date = new Date(acc.movementsDates[i]);
-     const day  = `${date.getDate()}`.padStart(2,0);
-     const month = `${date.getMonth()+1}`.padStart(2,0);
-     const year = date.getFullYear();
-     const displayDate = `${day}/${month}/${year}`;
+     const displayDate = formatDisplaydate(date);
 
     const html = `
       <div class="movements__row">
@@ -397,3 +409,16 @@ console.log(Number.parseInt('e23')); //NaN;
   // console.log(now.getSeconds()); //9
   // console.log(now.getMilliseconds()); //810
   // console.log(now.toISOString());  //2021-12-13T11:51:11.040Z
+
+
+
+  //OPERATIONS WITH DATES
+
+  const future = new Date(2037,10,23,12,4,5);
+  console.log(Number(future));
+  console.log(+future);
+
+  
+
+  // const days1 = calcDaysPassed(new Date(2037,10,3),new Date(2037,10,12));
+  // console.log(days1);
