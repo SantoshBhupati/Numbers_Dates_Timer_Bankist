@@ -186,7 +186,7 @@ const updateUI = function (acc) {
 
 ///////////////////////////////////////
 // Event handlers
-let currentAccount;
+let currentAccount,timer;
 
 
 // //EXPREATING API 
@@ -207,10 +207,29 @@ let currentAccount;
 // labelDate.textContent = new Intl.DateTimeFormat(locale ,options).format(now);  // every country has different format such as d/m/y ,m/d/y ,y/m/d
 
 
+//TIMER SETUP
+const startLogOutTimer = function(){
+  let time  = 120;
+  const tick =() => {
+    const min =  String(Math.trunc(time/60)).padStart(2,0);
+    const sec = String(Math.trunc(time%60)).padStart(2,0);
+    labelTimer.textContent = `${min}:${sec}`;
+    if(time ===0){
+      clearInterval(timer);
+      labelWelcome.textContent = `Login to Get Started`
+      containerApp.style.opacity = 0;
+    }
+    time--;
+  }
+  tick();
+  const timer =  setInterval(tick, 1000);
+  return timer;
+}
+
 //FAKE ACCOUNT TO DISPLAY
-currentAccount = account1;
-updateUI(currentAccount);
-containerApp.style.opacity = 100;
+// currentAccount = account1;
+// updateUI(currentAccount);
+// containerApp.style.opacity = 100;
 
 
 
@@ -251,7 +270,9 @@ labelDate.textContent = new Intl.DateTimeFormat(currentAccount.locale ,options).
     // Clear input fields
     inputLoginUsername.value = inputLoginPin.value = '';
     inputLoginPin.blur();
-
+  // Calling Timer Function
+    if(timer) clearInterval(timer);
+    timer = startLogOutTimer();
     // Update UI
     updateUI(currentAccount);
   }
@@ -281,6 +302,11 @@ btnTransfer.addEventListener('click', function (e) {
 
     // Update UI
     updateUI(currentAccount);
+
+    //Reset Time
+    clearInterval(timer);
+    // console.log(timer);
+    timer = startLogOutTimer();
   }
 });
 
@@ -298,6 +324,9 @@ btnLoan.addEventListener('click', function (e) {
       currentAccount.movementsDates.push(new Date().toISOString());
     // Update UI
     updateUI(currentAccount);
+       //Reset Time
+       clearInterval(timer);
+       timer = startLogOutTimer();
   },2500)
 }
   inputLoanAmount.value = '';
@@ -475,22 +504,22 @@ console.log(Number.parseInt('e23')); //NaN;
   console.log('Arebic',new Intl.NumberFormat('ar-SY',options).format(num));
 
 
-  //SETTIMEOUT AND SETINTERVAL
-  // Timers
+//   //SETTIMEOUT AND SETINTERVAL
+//   // Timers
 
-// setTimeout
-const ingredients = ['olives', 'spinach'];
-const pizzaTimer = setTimeout(
-  (ing1, ing2) => console.log(`Here is your pizza with ${ing1} and ${ing2} 🍕`),
-  3000,
-  ...ingredients
-);
-console.log('Waiting...');
+// // setTimeout
+// const ingredients = ['olives', 'spinach'];
+// const pizzaTimer = setTimeout(
+//   (ing1, ing2) => console.log(`Here is your pizza with ${ing1} and ${ing2} 🍕`),
+//   3000,
+//   ...ingredients
+// );
+// console.log('Waiting...');
 
-if (ingredients.includes('spinach')) clearTimeout(pizzaTimer);
+// if (ingredients.includes('spinach')) clearTimeout(pizzaTimer);
 
-// setInterval
-setInterval(function () {
-  const now = new Date();
-  console.log(now);
-}, 1000);
+// // setInterval
+// setInterval(function () {
+//   const now = new Date();
+//   console.log(now);
+// }, 1000);
